@@ -26,6 +26,7 @@ import { NavGroupComponent } from './theme/layout/admin/navigation/nav-content/n
 import { NavItemComponent } from './theme/layout/admin/navigation/nav-content/nav-item/nav-item.component';
 import { SharedModule } from './theme/shared/shared.module';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 
 
@@ -48,10 +49,11 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     NavItemComponent,
     NavCollapseComponent,
     NavGroupComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+
 
   ],
-  imports: [BrowserModule, AppRoutingModule, SharedModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, HttpClientModule, MatDialogModule,],
+  imports: [BrowserModule, AppRoutingModule, SharedModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, HttpClientModule, MatDialogModule, NgxChartsModule],
   providers: [],
   bootstrap: [AppComponent]
 })

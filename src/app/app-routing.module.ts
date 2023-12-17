@@ -22,9 +22,14 @@ const routes: Routes = [
         loadComponent: () => import('./demo/home/home.component').then(m => m.HomeComponent)
       },
       {
-        path: 'analytics',
-        loadComponent: () => import('./demo/dashboard/dash-analytics/dash-analytics.component')
+        path: 'reports',
+        loadComponent: () => import('./demo/reports/reports.component').then(m => m.ReportsComponent)
       },
+
+      // {
+      //   path: 'analytics',
+      //   loadComponent: () => import('./demo/dashboard/dash-analytics/dash-analytics.component')
+      // },
       {
         path: 'component',
         loadChildren: () => import('./demo/ui-element/ui-basic.module').then((m) => m.UiBasicModule)

@@ -34,10 +34,10 @@
             </div>
             <div class="form-group">
               <label for="web">Sitio Web o Link Red Social</label>
-              <input type="text" class="form-control" id="web" placeholder="Ingrese Sitio Web" [formControl]="websiteFormControl" [(ngModel)]="webAgrupacion" name="webAgrupacion" />
-              <div style='color:red' *ngIf="websiteFormControl.errors?.['pattern']">
+              <input type="text" class="form-control" id="web" placeholder="Ingrese Sitio Web" [(ngModel)]="webAgrupacion" name="webAgrupacion" />
+              <!-- <div style='color:red' *ngIf="websiteFormControl.errors?.['pattern']">
                 Por favor, introduzca una dirección de sitio web válida (por ejemplo, example.com).
-              </div>
+              </div> -->
             </div>
             <div class="form-group">
               <label for="logo">Logo de la Agrupación</label>

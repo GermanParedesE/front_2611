@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class LoginService {
-  // private apiUrl = 'http://localhost:3000/dev';
+
   private apiUrl = 'https://l8avvgsc5d.execute-api.sa-east-1.amazonaws.com/dev';
 
   constructor(private http: HttpClient) { }

@@ -1,0 +1,25 @@
+<div class="card">
+  <div class="card-header">
+    Total de Miembros
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Total Comunidad</h5>
+    <!-- Aplicar la clase personalizada -->
+    <p class="card-text total-members">{{ totalMembers }}</p>
+  </div>
+</div>
+
+<h2>Agrupaciones por región</h2>
+<ngx-charts-bar-vertical
+  [view]="view"
+  [scheme]="colorScheme"
+  [results]="single"
+  [gradient]="gradient"
+  [xAxis]="showXAxis"
+  [yAxis]="showYAxis"
+  [legend]="showLegend"
+  [showXAxisLabel]="showXAxisLabel"
+  [xAxisLabel]="'Región'"
+  [showYAxisLabel]="showYAxisLabel"
+  [yAxisLabel]="'Cantidad de Agrupaciones '">
+</ngx-charts-bar-vertical>

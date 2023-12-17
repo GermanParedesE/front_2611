@@ -19,7 +19,7 @@
               <th>Email Representante</th>
               <th>Comuna</th>
               <th>Región</th>
-              <th>Logo Agrupación</th>
+              <!-- <th>Logo Agrupación</th> -->
               <th>Acciones</th>
             </tr>
           </thead>
@@ -39,10 +39,9 @@
               <td>{{ agrupation.emailrep }}</td>
               <td>{{ agrupation.namecommune }}</td>
               <td>{{ agrupation.nameregion }}</td>
-              <td>
-                <img *ngIf="agrupation.logoagrupation" [src]="'http://localhost:3000/' + agrupation.logoagrupation" alt="Logo" style="width: 50px; height: auto;">
-
-              </td>
+              <!-- <td>
+                <img *ngIf="agrupation.logoagrupation" [src]="agrupation.logoagrupation" alt="Logo" style="width: 50px; height: auto;">
+              </td> -->
               <td>
                 <!-- <i class="feather icon-edit icon-spacing"></i> -->
                 <i class="feather icon-trash-2 delete-icon" (click)="openDeleteModal(agrupation.id_agrupation)"></i>

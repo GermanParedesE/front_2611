@@ -43,10 +43,10 @@ export const NavigationItems: NavigationItem[] = [
     icon: 'icon-group',
     children: [
       {
-        id: 'dashboard',
-        title: 'Reportes',
+        id: 'reports',
+        title: 'Reportería',
         type: 'item',
-        url: '/analytics',
+        url: '/reports',
         icon: 'feather icon-pie-chart'
       }
     ]
@@ -118,15 +118,7 @@ export const NavigationItems: NavigationItem[] = [
         target: true,
         breadcrumbs: false
       },
-      // {
-      //   id: 'signupagrupacion',
-      //   title: 'Sign up Agrupación',
-      //   type: 'item',
-      //   url: '/auth/signupagrupacion',
-      //   icon: 'feather icon-at-sign',
-      //   target: true,
-      //   breadcrumbs: false
-      // },
+
       {
         id: 'signin',
         title: 'Sign in',
@@ -138,22 +130,7 @@ export const NavigationItems: NavigationItem[] = [
       }
     ]
   },
-  // {
-  //   id: 'chart',
-  //   title: 'Chart',
-  //   type: 'group',
-  //   icon: 'icon-group',
-  //   children: [
-  //     {
-  //       id: 'apexchart',
-  //       title: 'ApexChart',
-  //       type: 'item',
-  //       url: '/chart',
-  //       classes: 'nav-item',
-  //       icon: 'feather icon-pie-chart'
-  //     }
-  //   ]
-  // },
+
   {
     id: 'forms & tables',
     title: 'Agrupaciones',

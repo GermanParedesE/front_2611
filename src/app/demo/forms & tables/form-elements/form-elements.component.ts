@@ -53,11 +53,11 @@ export default class FormElementsComponent {
     Validators.email
   ]);
 
-  websiteFormControl = new FormControl('', [
-    // Puedes ajustar la expresión regular para que se adapte a tus necesidades
-    Validators.pattern(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+$/)
+  // websiteFormControl = new FormControl('', [
+  //   // Puedes ajustar la expresión regular para que se adapte a tus necesidades
+  //   Validators.pattern(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+$/)
 
-  ]);
+  // ]);
 
 
   regiones: Region[] = [
@@ -527,7 +527,6 @@ export default class FormElementsComponent {
       this.selectedFile = input.files[0];
     }
   }
-
   enviarNuevaAgrupation() {
     const datosRepresentante = {
       namerep: this.nombreRepresentante,
@@ -537,9 +536,7 @@ export default class FormElementsComponent {
     this.agrupationService.crearRepresentative(datosRepresentante).subscribe({
       next: (responseRepresentante) => {
         console.log('Representante creado con éxito:', responseRepresentante);
-        // const idRepresentante = responseRepresentante.id;
 
-        // Ahora, con el ID del representante, crear la agrupación
         const formData = new FormData();
         formData.append('nameagrupation', this.nombreAgrupacion);
         formData.append('emailagrupation', this.emailAgrupacion);
@@ -552,42 +549,31 @@ export default class FormElementsComponent {
         formData.append('webagrupation', this.webAgrupacion);
         formData.append('commune_id_commune', String(this.comunaSeleccionada));
         formData.append('representative_id_rep', String(responseRepresentante.id));
+
         if (this.selectedFile) {
           formData.append('logo', this.selectedFile, this.selectedFile.name);
         }
 
-        // Ahora, envía la agrupación con la imagen usando FormData
         this.agrupationService.crearAgrupation(formData).subscribe({
           next: (responseAgrupation) => {
             console.log('Agrupación creada con éxito', responseAgrupation);
-
-            // Resetea las propiedades después de la creación exitosa
-            this.nombreAgrupacion = '';
-            this.emailAgrupacion = '';
-            this.fechaFundacion = '';
-            this.direccionAgrupacion = '';
-            this.telefonoAgrupacion = '';
-            this.tipoAgrupacion = '';
-            this.miembrosAgrupacion = '';
-            this.webAgrupacion = '';
-            this.descripcionAgrupacion = '';
-            this.logoAgrupacion = '';
-            this.comunaAgrupacion = '';
-            this.nombreRepresentante = '';
-            this.emailRepresentante = '';
-
-
-
-            // Mostrar el mensaje de éxito
-            this.showSuccessMessage = true;
-
-            setTimeout(() => this.showSuccessMessage = false, 3000);
+            // Reseteo de campos y muestra de mensaje de éxito
+            this.resetFormFields();
           },
-
           error: (errorAgrupation) => console.error('Error al crear la agrupación:', errorAgrupation)
         });
       },
       error: (errorRepresentante) => console.error('Error al crear el representante:', errorRepresentante)
     });
   }
+
+  resetFormFields() {
+    this.showSuccessMessage = true;
+
+    // Establecer un tiempo más largo antes de recargar la página
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);
+  }
+
 }
