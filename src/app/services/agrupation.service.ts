@@ -72,11 +72,6 @@ export class AgrupationService {
   //   return this.http.get(`${this.apiUrl}/agrupacion-con-mas-miembros`);
   // }
 
-  // getAgrupacionConMasMiembros(): Observable<AgrupacionConMasMiembrosResponse> {
-  //   return this.http.get<AgrupacionConMasMiembrosResponse>(`${this.apiUrl}/agrupacion-con-mas-miembros`);
-  // }
-
-
   getAgrupacionesPorRegion(): Observable<any> {
     return this.http.get(`${this.apiUrl}/agrupaciones-por-region`);
   }

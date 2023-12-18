@@ -5,6 +5,9 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { FormControl, Validators } from '@angular/forms';
 import { AgrupationService} from 'src/app/services/agrupation.service';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
+
 
 interface Region {
   id: number;
@@ -519,7 +522,7 @@ export default class FormElementsComponent {
   }
 
 
-  constructor(private agrupationService: AgrupationService) { }
+  constructor(private agrupationService: AgrupationService, private router: Router) { }
 
   manejarCambioArchivo(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -527,6 +530,29 @@ export default class FormElementsComponent {
       this.selectedFile = input.files[0];
     }
   }
+
+  resetFormFields() {
+    this.nombreAgrupacion = '';
+    this.emailAgrupacion = '';
+    this.fechaFundacion = '';
+    this.direccionAgrupacion = '';
+    this.telefonoAgrupacion = '';
+    this.tipoAgrupacion = '';
+    this.miembrosAgrupacion = '';
+    this.webAgrupacion = '';
+    this.descripcionAgrupacion = '';
+    this.logoAgrupacion = '';
+    this.comunaAgrupacion = '';
+    this.nombreRepresentante = '';
+    this.emailRepresentante = '';
+    this.showSuccessMessage = false;
+    this.selectedFile = null;
+    this.regionSeleccionada = null;
+    this.comunaSeleccionada = null;
+    // Restablece cualquier otro estado necesario del componente
+  }
+
+
   enviarNuevaAgrupation() {
     const datosRepresentante = {
       namerep: this.nombreRepresentante,
@@ -554,26 +580,45 @@ export default class FormElementsComponent {
           formData.append('logo', this.selectedFile, this.selectedFile.name);
         }
 
-        this.agrupationService.crearAgrupation(formData).subscribe({
-          next: (responseAgrupation) => {
-            console.log('Agrupación creada con éxito', responseAgrupation);
-            // Reseteo de campos y muestra de mensaje de éxito
-            this.resetFormFields();
-          },
-          error: (errorAgrupation) => console.error('Error al crear la agrupación:', errorAgrupation)
+        Swal.fire({
+          title: '¿Estás seguro?',
+          text: "Confirma la creación de la agrupación",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Sí, crear!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+
+            // Lógica para enviar la agrupación
+            this.agrupationService.crearAgrupation(formData).subscribe({
+              next: () => {
+                // Mensaje de éxito
+                Swal.fire(
+                  '¡Creado!',
+                  'La agrupación ha sido creada.',
+                  'success'
+                );
+                this.router.navigate(['/home'])
+              },
+              error: (errorAgrupation) => {
+                // Mensaje de error
+                console.error('Error al crear la agrupación:', errorAgrupation);
+                Swal.fire(
+                  'Error',
+                  'No se pudo crear la agrupación.',
+                  'error'
+                );
+              }
+            });
+          }
         });
       },
       error: (errorRepresentante) => console.error('Error al crear el representante:', errorRepresentante)
     });
   }
 
-  resetFormFields() {
-    this.showSuccessMessage = true;
 
-    // Establecer un tiempo más largo antes de recargar la página
-    setTimeout(() => {
-      window.location.reload();
-    }, 3000);
-  }
 
 }
