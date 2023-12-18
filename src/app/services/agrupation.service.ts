@@ -43,8 +43,8 @@ export interface AgrupacionPorRegion {
   providedIn: 'root'
 })
 export class AgrupationService {
-  // private apiUrl = 'https://l8avvgsc5d.execute-api.sa-east-1.amazonaws.com/dev';
-  private apiUrl = 'http://localhost:3000/dev'; //
+  private apiUrl = 'https://l8avvgsc5d.execute-api.sa-east-1.amazonaws.com/dev';
+  // private apiUrl = 'http://localhost:3000/dev'; //
 
   constructor(private http: HttpClient) { }
 
