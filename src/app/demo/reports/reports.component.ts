@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AgrupationService, AgrupacionPorRegion, TotalMembersResponse} from 'src/app/services/agrupation.service';
+import { AgrupationService, AgrupacionPorRegion, TotalMembersResponse, AgrupacionConMasMiembrosResponse} from 'src/app/services/agrupation.service';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 
 
 
 import { SharedModule } from 'src/app/theme/shared/shared.module';
+
+
 
 @Component({
   selector: 'app-reports',
@@ -19,6 +21,7 @@ import { SharedModule } from 'src/app/theme/shared/shared.module';
 export class ReportsComponent implements OnInit {
   view: [number, number] = [1200, 400];
   totalMembers: number = 0;
+  agrupacionConMasMiembros: AgrupacionConMasMiembrosResponse | null = null;
 
   colorScheme = 'vivid';
   single: any[] = [];
@@ -49,6 +52,12 @@ export class ReportsComponent implements OnInit {
     }, error => {
       console.error('Error al obtener el total de miembros', error);
     });
+
+    // this.agrupationService.getAgrupacionConMasMiembros().subscribe((response: AgrupacionConMasMiembrosResponse) => {
+    //   this.agrupacionConMasMiembros = response; // Asegúrate de que la propiedad corresponda con la respuesta del backend
+    // }, error => {
+    //   console.error('Error al obtener la agrupación con más miembros', error);
+    // });
 
 
   }

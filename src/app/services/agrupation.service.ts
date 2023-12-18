@@ -43,8 +43,8 @@ export interface AgrupacionPorRegion {
   providedIn: 'root'
 })
 export class AgrupationService {
-
-  private apiUrl = 'https://l8avvgsc5d.execute-api.sa-east-1.amazonaws.com/dev'; //
+  // private apiUrl = 'https://l8avvgsc5d.execute-api.sa-east-1.amazonaws.com/dev';
+  private apiUrl = 'http://localhost:3000/dev'; //
 
   constructor(private http: HttpClient) { }
 
@@ -68,9 +68,14 @@ export class AgrupationService {
     return this.http.get<TotalMembersResponse>(`${this.apiUrl}/total-members`);
   }
 
-  getAgrupacionConMasMiembros(): Observable<unknown> {
-    return this.http.get(`${this.apiUrl}/agrupacion-con-mas-miembros`);
-  }
+  // getAgrupacionConMasMiembros(): Observable<unknown> {
+  //   return this.http.get(`${this.apiUrl}/agrupacion-con-mas-miembros`);
+  // }
+
+  // getAgrupacionConMasMiembros(): Observable<AgrupacionConMasMiembrosResponse> {
+  //   return this.http.get<AgrupacionConMasMiembrosResponse>(`${this.apiUrl}/agrupacion-con-mas-miembros`);
+  // }
+
 
   getAgrupacionesPorRegion(): Observable<any> {
     return this.http.get(`${this.apiUrl}/agrupaciones-por-region`);

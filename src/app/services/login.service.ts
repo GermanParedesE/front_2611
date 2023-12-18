@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class LoginService {
-
-  private apiUrl = 'https://l8avvgsc5d.execute-api.sa-east-1.amazonaws.com/dev';
+  // private apiUrl = 'https://l8avvgsc5d.execute-api.sa-east-1.amazonaws.com/dev';
+  private apiUrl = 'http://localhost:3000/dev';
 
   constructor(private http: HttpClient) { }
 
@@ -15,7 +15,7 @@ export class LoginService {
     return this.http.post(`${this.apiUrl}/insertAccount`, userData);
   }
 
-  validateAccount(email: string, password: string): Observable<any> {
+  validateAccount(email: string, password: string): Observable<unknown> {
     return this.http.post<any>(`${this.apiUrl}/validateAccount`, { emailaccount: email, passaccount: password });
   }
 

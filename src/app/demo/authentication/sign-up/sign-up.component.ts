@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { RouterModule } from '@angular/router';
-import { LoginService} from 'src/app/services/login.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LoginService } from 'src/app/services/login.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -13,15 +14,25 @@ import Swal from 'sweetalert2';
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
-
-
 export default class SignUpComponent {
-  username: string = '';
-  email: string = '';
-  password: string = '';
-  confirmPassword: string = '';
+  signUpForm: FormGroup;
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
+
+  constructor(private formBuilder: FormBuilder, private loginService: LoginService, private router: Router) {
+    this.signUpForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', Validators.required]
+    }, { validator: this.matchPassword });
+  }
+
+  matchPassword(group: FormGroup) {
+    const pass = group.get('password')?.value;
+    const confirmPass = group.get('confirmPassword')?.value;
+    return pass === confirmPass ? null : { notSame: true };
+  }
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
@@ -31,21 +42,18 @@ export default class SignUpComponent {
     this.showConfirmPassword = !this.showConfirmPassword;
   }
 
-  constructor(private loginService: LoginService, private router: Router) {}
-
   register() {
-    if (this.password !== this.confirmPassword) {
-      alert('Las contraseñas no coinciden');
+    if (this.signUpForm.invalid || this.signUpForm.errors?.['notSame']) {
+      // Manejar errores aquí
       return;
     }
 
     const userData = {
-      useraccount: this.username,
-      emailaccount: this.email,
-      passaccount: this.password,
-      // Aquí debes establecer los valores adecuados para los siguientes campos
-      type_user_id_user: 2, // Tipo de usuario (ajustar según tu lógica de negocio)
-      agrupation_id_agrupation: null // ID de la agrupación (si es aplicable)
+      useraccount: this.signUpForm.value.username,
+      emailaccount: this.signUpForm.value.email,
+      passaccount: this.signUpForm.value.password,
+      type_user_id_user: 2,
+      agrupation_id_agrupation: null
     };
 
     this.loginService.registerUser(userData).subscribe(response => {
@@ -56,13 +64,12 @@ export default class SignUpComponent {
         confirmButtonText: 'Ok'
       }).then((result) => {
         if (result.isConfirmed) {
-          this.router.navigate(['/auth/signin']); // Redirigir a la página de inicio de sesión
+          this.router.navigate(['/auth/signin']);
         }
       });
-      this.resetForm(); // Resetear el formulario
+      this.resetForm();
     }, error => {
       console.error(error);
-      // Manejar errores de registro aquí
       Swal.fire({
         title: 'Error',
         text: 'Hubo un problema al crear tu cuenta',
@@ -73,9 +80,6 @@ export default class SignUpComponent {
   }
 
   resetForm() {
-    this.username = '';
-    this.email = '';
-    this.password = '';
-    this.confirmPassword = '';
+    this.signUpForm.reset();
   }
 }

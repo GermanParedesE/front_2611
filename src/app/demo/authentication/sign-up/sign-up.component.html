@@ -4,32 +4,66 @@
       <div class="row align-items-center text-center">
         <div class="col-md-12">
           <div class="card-body">
+
+            <!-- Logo y título -->
             <img src="assets/images/logo-dark.png" alt="logo" class="img-fluid mb-4" />
             <h4 class="mb-3 f-w-400">Regístrate</h4>
-            <div class="input-group mb-3">
-              <span class="input-group-text"><i class="feather icon-user"></i></span>
-              <input type="text" class="form-control" placeholder="Nombre Usuario" [(ngModel)]="username" />
-            </div>
-            <div class="input-group mb-3">
-              <span class="input-group-text"><i class="feather icon-mail"></i></span>
-              <input type="email" class="form-control" placeholder="Email" [(ngModel)]="email" />
-            </div>
-            <div class="input-group mb-3">
-              <span class="input-group-text"><i class="feather icon-lock"></i></span>
-              <input [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="Password" [(ngModel)]="password" />
-              <span class="input-group-text" (click)="togglePasswordVisibility()"><i class="feather" [ngClass]="showPassword ? 'icon-eye-off' : 'icon-eye'"></i></span>
-            </div>
 
-            <div class="input-group mb-3">
-              <span class="input-group-text"><i class="feather icon-lock"></i></span>
-              <input [type]="showConfirmPassword ? 'text' : 'password'" class="form-control" placeholder="Confirmar Password" [(ngModel)]="confirmPassword" />
-              <span class="input-group-text" (click)="toggleConfirmPasswordVisibility()"><i class="feather" [ngClass]="showConfirmPassword ? 'icon-eye-off' : 'icon-eye'"></i></span>
-            </div>
+            <!-- Formulario de registro -->
+            <form [formGroup]="signUpForm" (ngSubmit)="register()">
 
-            <div class="d-grid">
-              <button class="btn btn-primary btn-block mb-4" (click)="register()">Regístrate</button>
-            </div>
-            <p class="mb-2">Ya tienes una cuenta? <a [routerLink]="['/auth/signin']" class="f-w-400">Iniciar Sesión</a></p>
+              <!-- Campo de usuario -->
+              <div class="input-group mb-3">
+                <span class="input-group-text"><i class="feather icon-user"></i></span>
+                <input type="text" class="form-control" placeholder="Nombre Usuario" formControlName="username" />
+              </div>
+              <div *ngIf="signUpForm.controls['username'].invalid && signUpForm.controls['username'].touched" class="alert alert-danger">
+                El nombre de usuario es requerido.
+              </div>
+
+              <!-- Campo de email -->
+              <div class="input-group mb-3">
+                <span class="input-group-text"><i class="feather icon-mail"></i></span>
+                <input type="email" class="form-control" placeholder="Email" formControlName="email" />
+              </div>
+              <div *ngIf="signUpForm.controls['email'].invalid && signUpForm.controls['email'].touched" class="alert alert-danger">
+                El email es requerido y debe ser válido.
+              </div>
+
+              <!-- Campo de contraseña -->
+              <div class="input-group mb-3">
+                <span class="input-group-text"><i class="feather icon-lock"></i></span>
+                <input [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="Contraseña" formControlName="password" />
+                <span class="input-group-text" (click)="togglePasswordVisibility()">
+                  <i class="feather" [ngClass]="showPassword ? 'icon-eye-off' : 'icon-eye'"></i>
+                </span>
+              </div>
+              <div *ngIf="signUpForm.controls['password'].invalid && signUpForm.controls['password'].touched" class="alert alert-danger">
+                La contraseña es requerida y debe tener al menos 6 caracteres.
+              </div>
+
+              <!-- Campo de confirmación de contraseña -->
+              <div class="input-group mb-3">
+                <span class="input-group-text"><i class="feather icon-lock"></i></span>
+                <input [type]="showConfirmPassword ? 'text' : 'password'" class="form-control" placeholder="Confirmar Contraseña" formControlName="confirmPassword" />
+                <span class="input-group-text" (click)="toggleConfirmPasswordVisibility()">
+                  <i class="feather" [ngClass]="showConfirmPassword ? 'icon-eye-off' : 'icon-eye'"></i>
+                </span>
+              </div>
+              <div *ngIf="signUpForm.errors?.['notSame'] && signUpForm.controls['confirmPassword'].touched" class="alert alert-danger">
+                Las contraseñas no coinciden.
+              </div>
+
+              <!-- Botón de registro -->
+              <div class="d-grid">
+                <button class="btn btn-primary btn-block mb-4" type="submit" [disabled]="!signUpForm.valid">Regístrate</button>
+              </div>
+
+              <!-- Enlace para iniciar sesión -->
+              <p class="mb-2">Ya tienes una cuenta? <a routerLink="/auth/signin" class="f-w-400">Iniciar Sesión</a></p>
+
+            </form>
+
           </div>
         </div>
       </div>
